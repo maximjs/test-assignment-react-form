@@ -6,6 +6,8 @@ import NaturalPerson from './NaturalPersonForm';
 class App extends React.Component {
   state = {
     naturalPersons: [],
+    selectedNaturalPersonId: null,
+    showNaturalPersonForm: false,
     dealType: {
       goods: true,
       service: false,
@@ -38,9 +40,26 @@ class App extends React.Component {
     }
   };
 
+  handleClickAddNaturalPerson = () => {
+    const value = this.state.showNaturalPersonForm;
+    this.setState({ showNaturalPersonForm: !value });
+  };
+
+  handleSelectNaturalPerson = (e) => {
+    this.setState({ selectedNaturalPersonId: e.target.value });
+  };
+
   changePersonsList = (naturalPerson) => {
-    console.log('changePersonsList', naturalPerson);
-    this.setState({ naturalPersons: [...this.state.naturalPersons, naturalPerson] });
+    const { lastName, firstName, middleName, birthDate } = naturalPerson;
+    const id = `${lastName}${firstName}${middleName}${birthDate}`;
+    const person = { ...naturalPerson };
+    person.id = id;
+    const value = this.state.showNaturalPersonForm;
+    this.setState({
+      naturalPersons: [...this.state.naturalPersons, person],
+      showNaturalPersonForm: !value,
+      selectedNaturalPersonId: id,
+    });
   };
 
   renderDealRole = () => {
@@ -69,9 +88,36 @@ class App extends React.Component {
     );
   };
 
+  renderSelectPerson = () => {
+    const { naturalPersons } = this.state;
+    const persons = naturalPersons.map((el) => {
+      const { lastName, firstName, middleName, id } = el;
+      return (
+        <option key={id} value={id}>
+          {`${lastName} ${firstName} ${middleName}`}
+        </option>
+      );
+    });
+    return (
+      <FormGroup controlId="formControlsSelectPerson">
+        <ControlLabel><b>Вы участвуете в сделке как</b></ControlLabel>
+        <FormControl value={this.state.selectedNaturalPersonId} componentClass="select" placeholder="select" onChange={this.handleSelectNaturalPerson}>
+          {persons}
+        </FormControl>
+        <Button
+          bsStyle="success"
+          type="button"
+          onClick={this.handleClickAddNaturalPerson}
+        >
+          Добавить физическое лицо
+        </Button>
+      </FormGroup>
+    );
+  };
+
   render() {
-    const { dealType } = this.state;
-    // console.log(this.state);
+    const { dealType, showNaturalPersonForm } = this.state;
+    console.log('state', this.state);
     return (
       <React.Fragment>
         <h4>Создание сделки</h4>
@@ -87,15 +133,16 @@ class App extends React.Component {
           </FormGroup>
           <b>Роль в сделке</b>
           {this.renderDealRole()}
-          <b>Вы участвуете в сделке как</b>
+          {this.renderSelectPerson()}
           <Button
             bsStyle="success"
-            type="submit"
+            type="button"
           >
             Создать
           </Button>
         </form>
-        <NaturalPerson changePersonsList={this.changePersonsList} />
+        <br />
+        {showNaturalPersonForm ? <NaturalPerson changePersonsList={this.changePersonsList} /> : null}
       </React.Fragment>
     );
   }

@@ -63,8 +63,7 @@ class NaturalPersonForm extends React.Component {
     this.setState({ birthDate, birthDateValidated });
   };
 
-  handleSubmit = (e) => {
-    e.preventDefault();
+  handleDataUpdate = () => {
     const { changePersonsList } = this.props;
     const { lastName, firstName, middleName, birthDate } = this.state;
     if (changePersonsList) {
@@ -169,8 +168,8 @@ class NaturalPersonForm extends React.Component {
           <Button
             bsStyle="success"
             disabled={!this.isFormValidated()}
-            type="submit"
-            onClick={this.handleSubmit}
+            type="button"
+            onClick={this.handleDataUpdate}
           >
             Создать
           </Button>
