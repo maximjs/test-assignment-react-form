@@ -55,7 +55,7 @@ class App extends React.Component {
 
   handleChangeItemName = (e) => {
     const itemName = e.target.value;
-    const itemNameValidated = itemName.length >= 1;
+    const itemNameValidated = itemName.trim().length >= 1;
     this.setState({ itemName, itemNameValidated });
   };
 
