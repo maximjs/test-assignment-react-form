@@ -18,6 +18,10 @@ class App extends React.Component {
       customer: false,
       contractor: false,
     },
+    itemName: '',
+    itemNameValidated: false,
+    itemDescription: '',
+    itemDescriptionValidated: false,
   };
 
   handleClickDealType = type => () => {
@@ -49,6 +53,19 @@ class App extends React.Component {
     this.setState({ selectedNaturalPersonId: e.target.value });
   };
 
+  handleChangeItemName = (e) => {
+    const itemName = e.target.value;
+    const itemNameValidated = itemName.length >= 1;
+    this.setState({ itemName, itemNameValidated });
+  };
+
+  handleChangeItemDescription = (e) => {
+    const itemDescription = e.target.value;
+    const itemDescriptionArr = itemDescription.trim().split(' ');
+    const itemDescriptionValidated = itemDescriptionArr.length >= 4;
+    this.setState({ itemDescription, itemDescriptionValidated });
+  };
+
   changePersonsList = (naturalPerson) => {
     const { lastName, firstName, middleName, birthDate } = naturalPerson;
     const id = `${lastName}${firstName}${middleName}${birthDate}`;
@@ -59,6 +76,41 @@ class App extends React.Component {
       naturalPersons: [...this.state.naturalPersons, person],
       showNaturalPersonForm: !value,
       selectedNaturalPersonId: id,
+    });
+  };
+
+  isFormValidated = () => {
+    const { dealRole, selectedNaturalPersonId, itemNameValidated, itemDescriptionValidated } = this.state;
+    if (selectedNaturalPersonId && itemNameValidated && itemDescriptionValidated
+      && (dealRole.buyer || dealRole.seller || dealRole.customer || dealRole.contractor)) {
+      return true;
+    }
+    return false;
+  };
+
+  handleDataUpdate = () => {
+    const { updateDeals } = this.props;
+    const { dealType, dealRole, itemName, itemDescription, selectedNaturalPersonId } = this.state;
+    if (updateDeals) {
+      updateDeals({ dealType, dealRole, itemName, itemDescription, naturalPersonId: selectedNaturalPersonId });
+    }
+    this.setState({
+      selectedNaturalPersonId: null,
+      showNaturalPersonForm: false,
+      dealType: {
+        goods: true,
+        service: false,
+      },
+      dealRole: {
+        buyer: false,
+        seller: false,
+        customer: false,
+        contractor: false,
+      },
+      itemName: '',
+      itemNameValidated: false,
+      itemDescription: '',
+      itemDescriptionValidated: false,
     });
   };
 
@@ -115,9 +167,52 @@ class App extends React.Component {
     );
   };
 
+  renderItemName = () => {
+    const { itemName, itemNameValidated, dealType } = this.state;
+    const name = dealType.goods ? 'Название товара' : 'Название услуги';
+    return (
+      <FormGroup
+        controlId="goodsName"
+      >
+        <ControlLabel><b>{name}</b></ControlLabel>
+        <FormControl
+          type="text"
+          value={itemName}
+          onChange={this.handleChangeItemName}
+          className={itemNameValidated ? 'is-valid' : 'is-invalid'}
+        />
+        <HelpBlock>{itemNameValidated
+          ? null
+          : <small className="form-text text-muted">Минимум 1 символ.</small>}
+        </HelpBlock>
+      </FormGroup>
+    );
+  };
+
+  renderItemDescription = () => {
+    const { itemDescription, itemDescriptionValidated, dealType } = this.state;
+    const name = dealType.goods ? 'Описание товара' : 'Описание услуги';
+    return (
+      <FormGroup
+        controlId="goodsDescription"
+      >
+        <ControlLabel><b>{name}</b></ControlLabel>
+        <FormControl
+          type="text"
+          value={itemDescription}
+          onChange={this.handleChangeItemDescription}
+          className={itemDescriptionValidated ? 'is-valid' : 'is-invalid'}
+        />
+        <HelpBlock>{itemDescriptionValidated
+          ? null
+          : <small className="form-text text-muted">Минимум 4-е слова.</small>}
+        </HelpBlock>
+      </FormGroup>
+    );
+  };
+
   render() {
     const { dealType, showNaturalPersonForm } = this.state;
-    console.log('state', this.state);
     return (
       <React.Fragment>
         <h4>Создание сделки</h4>
@@ -134,9 +229,13 @@ class App extends React.Component {
           <b>Роль в сделке</b>
           {this.renderDealRole()}
           {this.renderSelectPerson()}
+          {this.renderItemName()}
+          {this.renderItemDescription()}
           <Button
             bsStyle="success"
             type="button"
+            disabled={!this.isFormValidated()}
+            onClick={this.handleDataUpdate}
           >
             Создать
           </Button>

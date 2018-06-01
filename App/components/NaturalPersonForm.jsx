@@ -1,4 +1,4 @@
-/* eslint object-curly-newline: ["error", { "minProperties": 8 }] */
+/* eslint object-curly-newline: ["error", { "multiline": true }] */
 import React from 'react';
 import { FormGroup, FormControl, ControlLabel, HelpBlock, Button } from 'react-bootstrap';
 import InputMask from 'react-input-mask';
@@ -105,9 +105,7 @@ class NaturalPersonForm extends React.Component {
       <React.Fragment>
         <h4>Создание физического лица</h4>
         <form>
-          <FormGroup
-            controlId="lastNameInput"
-          >
+          <FormGroup controlId="lastNameInput">
             <ControlLabel><b>Фамилия</b></ControlLabel>
             <FormControl
               type="text"
