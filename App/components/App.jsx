@@ -119,22 +119,22 @@ class App extends React.Component {
     if (dealType.goods) {
       return (
         <FormGroup>
-          <Radio name="buyer" checked={dealRole.buyer} onClick={this.handleClickDealRole('buyer')} inline>
-            покупатель
+          <Radio name="buyer" className="radio" checked={dealRole.buyer} onClick={this.handleClickDealRole('buyer')} inline>
+            <span className="radio-text">покупатель</span>
           </Radio>{' '}
-          <Radio name="seller" checked={dealRole.seller} onClick={this.handleClickDealRole('seller')} inline>
-            продавец
+          <Radio name="seller" className="radio" checked={dealRole.seller} onClick={this.handleClickDealRole('seller')} inline>
+            <span className="radio-text">продавец</span>
           </Radio>
         </FormGroup>
       );
     }
     return (
       <FormGroup>
-        <Radio name="customer" checked={dealRole.customer} onClick={this.handleClickDealRole('customer')} inline>
-          заказчик
-        </Radio>{' '}
-        <Radio name="contractor" checked={dealRole.contractor} onClick={this.handleClickDealRole('contractor')} inline>
-          исполнитель
+        <Radio name="customer" className="radio" checked={dealRole.customer} onClick={this.handleClickDealRole('customer')} inline>
+          <span className="radio-text">заказчик</span>
+        </Radio>{'   '}
+        <Radio name="contractor" className="radio" checked={dealRole.contractor} onClick={this.handleClickDealRole('contractor')} inline>
+          <span className="radio-text">исполнитель</span>
         </Radio>
       </FormGroup>
     );
@@ -219,11 +219,11 @@ class App extends React.Component {
         <form>
           <b>Тип сделки</b>
           <FormGroup>
-            <Radio name="goods" checked={dealType.goods} onClick={this.handleClickDealType('goods')} inline>
-              товар
+            <Radio name="goods" className="radio" checked={dealType.goods} onClick={this.handleClickDealType('goods')} inline>
+              <span className="radio-text">товар</span>
             </Radio>{' '}
-            <Radio name="service" checked={dealType.service} onClick={this.handleClickDealType('service')} inline>
-              услуга
+            <Radio name="service" className="radio" checked={dealType.service} onClick={this.handleClickDealType('service')} inline>
+              <span className="radio-text">услуга</span>
             </Radio>
           </FormGroup>
           <b>Роль в сделке</b>

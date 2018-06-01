@@ -1,5 +1,5 @@
 Результат:  
-https://herokuapp.com/ (подождите 20-40 сек, пока стартует dyno)
+https://quiet-dawn-12291.herokuapp.com/ (подождите 20-40 сек, пока стартует dyno)
 
 ***
 

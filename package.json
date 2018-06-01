@@ -6,6 +6,7 @@
     "node": "9.8"
   },
   "scripts": {
+    "postinstall": "npm run webpack && npm run build",
     "babel-node": "babel-node",
     "eslint": "eslint .",
     "webpack": "webpack --mode=production",
@@ -18,7 +19,7 @@
   },
   "author": "Maxim Kozlyakov",
   "license": "ISC",
-  "homepage": "",
+  "homepage": "https://quiet-dawn-12291.herokuapp.com/",
   "dependencies": {
     "babel-cli": "*",
     "babel-core": "*",
