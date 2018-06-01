@@ -1,0 +1,50 @@
+{
+  "name": "frontend_test_assignment_react_form",
+  "version": "0.0.1",
+  "description": "",
+  "engines": {
+    "node": "9.8"
+  },
+  "scripts": {
+    "babel-node": "babel-node",
+    "eslint": "eslint .",
+    "webpack": "webpack --mode=production",
+    "watch": "webpack --watch --mode=production",
+    "build": "set NODE_ENV=production && babel src/server.js --out-file server.js --source-maps inline"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/maximjs/test-assignment-react-form"
+  },
+  "author": "Maxim Kozlyakov",
+  "license": "ISC",
+  "homepage": "",
+  "dependencies": {
+    "babel-cli": "*",
+    "babel-core": "*",
+    "babel-eslint": "*",
+    "babel-loader": "*",
+    "babel-preset-env": "*",
+    "babel-preset-react": "*",
+    "babel-preset-stage-0": "*",
+    "bootstrap": "*",
+    "css-loader": "*",
+    "express": "^4.16.3",
+    "html-webpack-plugin": "*",
+    "react": "*",
+    "react-bootstrap": "*",
+    "react-dom": "*",
+    "react-input-mask": "^2.0.1",
+    "style-loader": "*",
+    "webpack": "*",
+    "webpack-cli": "*"
+  },
+  "devDependencies": {
+    "eslint": "*",
+    "eslint-config-airbnb": "*",
+    "eslint-config-react": "*",
+    "eslint-plugin-import": "*",
+    "eslint-plugin-jsx-a11y": "*",
+    "eslint-plugin-react": "*"
+  }
+}
